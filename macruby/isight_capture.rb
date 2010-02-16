@@ -45,27 +45,14 @@ class Capture
     @session.startRunning
   end
 
-  def applicationDidFinishLaunching(notification)
-    while(@captured == nil)
-      sleep(0.1)
-    end
-
-    save(@captured)
-    NSApplication.sharedApplication.terminate(nil)
-  end
-
   def view(view, willDisplayImage:image)
-    if(@captured == nil)
-      @captured = image
+    if(@flag == nil)
+      @flag = true
+      save(image)
+      NSApplication.sharedApplication.terminate(nil)
     end
-#ここで画像を保存したかったが、例外が発生するので断念
-# -> applicationDidFinishLaunching で画像を保存する
-#
-#     if(@flag == nil)
-#       save(image)
-#       @flag = true
-#       NSApplication.sharedApplication.terminate(nil)
-#     end
+
+    return image
   end
 
   def save(image)
