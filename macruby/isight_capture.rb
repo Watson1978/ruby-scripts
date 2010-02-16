@@ -47,7 +47,7 @@ class Capture
 
   def applicationDidFinishLaunching(notification)
     while(@captured == nil)
-      sleep(0.5)
+      sleep(0.1)
     end
 
     save(@captured)
@@ -55,7 +55,9 @@ class Capture
   end
 
   def view(view, willDisplayImage:image)
-    @captured = image
+    if(@captured == nil)
+      @captured = image
+    end
 #ここで画像を保存したかったが、例外が発生するので断念
 # -> applicationDidFinishLaunching で画像を保存する
 #
