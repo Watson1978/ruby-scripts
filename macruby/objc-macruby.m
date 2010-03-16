@@ -9,7 +9,7 @@ int main(void) {
   ruby = [[MacRuby sharedRuntime] evaluateString:@"puts 'test'"];
   ruby = [[MacRuby sharedRuntime] evaluateFileAtPath:@"fib.rb"];
 
-  NSNumber *Num = [NSNumber numberWithInt: 31];
+  NSNumber *num = [NSNumber numberWithInt: 31];
   NSLog(@"%@", [ruby performRubySelector:@selector(main) withArguments: (id)num, NULL]);
   return 0;
 }
