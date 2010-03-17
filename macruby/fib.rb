@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 def main(n = 0)
+  n = n.intValue if(n.class == NSCFNumber)
   return fib(n.to_i)
 end
 
