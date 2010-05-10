@@ -43,8 +43,8 @@ playlist.tracks.each do |track|
       if(year > 0)
         # トラックに年を設定
         track.year = year
+        puts "#{track.artist} - #{track.album} : #{track.year} : #{year}"
       end
-      puts "#{track.artist} - #{track.album} : #{track.year}"
     end
   end
 end
