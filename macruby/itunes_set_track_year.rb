@@ -29,22 +29,34 @@ class SBElementArray
   end
 end
 
+def set_track_year(tracks, artist, album, year)
+  # 指定されたアーティストとアルバム名に一致するトラックにリリース年を設定
+  tracks.each do |track|
+    if((track.artist == artist) && (track.album == album) && (track.year.to_i == 0))
+      5.times do 
+        # ときどき設定出来ない場合があるようなので、リトライしながら設定する
+        track.year = year
+        
+        if(track.year == year); break; end
+        sleep(0.5)
+      end
+      puts "#{track.artist} - #{track.album} : #{track.year} : #{year}"
+    end
+
+  end
+end
+
 playlist = itunes.sources["ライブラリ"].userPlaylists[PLAYLIST]
 playlist.tracks.each do |track|
-  year = 0
-  if(track.year.to_i > 0)
-    year =  track.year
-  else
-    if((track.artist != "") && (track.album != ""))
-      IO.popen("ruby ./get_album_release_year.rb \"#{track.artist}\" \"#{track.album}\"") { |io|
-        year = io.gets.to_i
-      }
+  if((track.artist != "") && (track.album != "") && (track.year.to_i ==  0))
+    year = 0
+    IO.popen("ruby ./get_album_release_year.rb \"#{track.artist}\" \"#{track.album}\"") { |io|
+      year = io.gets.to_i
+    }
 
-      if(year > 0)
-        # トラックに年を設定
-        track.year = year
-        puts "#{track.artist} - #{track.album} : #{track.year} : #{year}"
-      end
+    if(year > 0)
+      # トラックに年を設定
+      set_track_year(playlist.tracks, track.artist, track.album, year)
     end
   end
 end
