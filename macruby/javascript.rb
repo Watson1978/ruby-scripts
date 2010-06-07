@@ -15,6 +15,7 @@ module JSC
         size = JSStringGetMaximumUTF8CStringSize(string)
         buffer = Pointer.new('c', size)
         ret = JSStringGetUTF8CString(string, buffer, size)
+        JSStringRelease(string)
 
         ary = []
         (ret - 1).times { |i| ary << buffer[i] }
