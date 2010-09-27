@@ -38,7 +38,7 @@ module JSC
     if(JSCheckScriptSyntax(ctx, source, nil, 0, exception))
       JSEvaluateScript(ctx, source, nil, nil, 0, exception)
     else
-      puts "Error: Syntax error."
+      raise "Syntax error."
     end
 
     JSStringRelease(source)
@@ -53,8 +53,15 @@ if($0 == __FILE__)
   for(var i = 1; i <= 10; i++) {
     sum += i;
   }
-  print(sum);
-  print("あいうえお");
+  print("sum : " + sum);
+
+  function fib(n) {
+    if(n == 0) return 0;
+    if(n == 1) return 1;
+    return fib(n - 1) + fib(n - 2);
+  }
+  var ret = fib(7);
+  print("fib(7) : " + ret);
 EOS
 
   JSC.eval(program)
